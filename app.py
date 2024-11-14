@@ -20,17 +20,19 @@ def agendar_cita():
 @app.route('/confirmar-cita', methods=['GET', 'POST'])
 def confirmar_cita():
     if request.method == 'POST':
-        # Obtener los detalles enviados por el formulario
-        especialidad = request.form['especialidad']
-        fecha = request.form['fecha']
-        hora = request.form['hora']
-        especialista = request.form['especialista']
-        nombre = request.form['nombre']
-        
-        # Aquí procesas la cita, como guardarla o enviarla por correo, etc.
-        # Luego, rediriges a una página de éxito o lo que prefieras.
-        return render_template('confirmar_cita.html', especialidad=especialidad, fecha=fecha, hora=hora, especialista=especialista, nombre=nombre)
+        try:
+            rut = request.form['rut']
+            especialista = Especialista.get_especialista(rut)
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            
+            # Procesar la cita como necesites (ej. guardarla o enviar por correo)
+            return render_template('confirmar_cita.html', especialidad=especialista.especialidad, fecha=fecha, hora=hora, especialista=especialista, nombre=especialista.nombre)
 
+        except KeyError as e:
+            print(f"Error: El campo {e} no se encuentra en el formulario")
+            return "Error: Faltan campos en el formulario", 400
+        
     # Si es un GET, solo renderiza el formulario
     return render_template('agendar_cita.html')
     

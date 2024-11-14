@@ -31,7 +31,8 @@
                                 {% if especialista.horas %}
                                     <form method="POST" action="/confirmar-cita">
                                         <input type="hidden" name="rut" value="{{ especialista.rut }}">
-                                        <input type="hidden" name="nombre" value="{{ especialista.nombre }}">
+                                        <input type="hidden" name="fecha" value="{{ fecha }}">
+                                        <label for="hora">Hora:</label>
                                         <select class="form-control" name="hora" required>
                                             {% for hora in especialista.horas %}
                                                 <option value="{{ hora }}">{{ hora }}</option>
