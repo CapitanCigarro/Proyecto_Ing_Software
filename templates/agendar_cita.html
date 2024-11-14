@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Citas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Agendar Cita Médica</h1>
+
+        <!-- Mostrar Especialidad y Fecha Seleccionada -->
+        <h3>Especialidad: {{ especialidad }}</h3>
+        <h3>Fecha: {{ fecha }}</h3>
+
+        {% if especialistas %}
+            <h2 class="mt-4">Especialistas Disponibles</h2>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Horas Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for especialista in especialistas %}
+                        <tr>
+                            <td>{{ especialista.nombre }}</td>
+                            <td>
+                                {% if especialista.horas %}
+                                    <form method="POST" action="/confirmar-cita">
+                                        <input type="hidden" name="rut" value="{{ especialista.rut }}">
+                                        <input type="hidden" name="nombre" value="{{ especialista.nombre }}">
+                                        <select class="form-control" name="hora" required>
+                                            {% for hora in especialista.horas %}
+                                                <option value="{{ hora }}">{{ hora }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="btn btn-primary mt-2">Agendar Cita</button>
+                                    </form>
+                                {% else %}
+                                    <p>No hay horas disponibles</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="mt-4">No hay especialistas disponibles para esta especialidad en la fecha seleccionada.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

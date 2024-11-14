@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centro Médico</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,36 +15,37 @@
         <button onclick="openAppointmentModal()">Pedir Cita Médica</button>
     </main>
 
+    <!-- Modal para solicitar la cita -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAppointmentModal()">&times;</span>
             <h2>Solicitar Cita</h2>
-            <label for="specialist">Especialidad:</label>
-            <select id="specialist">
-                <option value="cardiologo">Cardiólogo</option>
-                <option value="dermatologo">Dermatólogo</option>
-                <option value="pediatra">Pediatra</option>
-                <option value="neurologia">Neurología</option>
-                <option value="psiquiatria">Psiquiatría</option>
-                <option value="ginecologia">Ginecología</option>
-                <option value="traumatologia">Traumatología</option>
-                <option value="endocrinologia">Endocrinología</option>
-                <option value="gastroenterologia">Gastroenterología</option>
-                <option value="oftalmologia">Oftalmología</option>
-            </select>
+            
+            <!-- Formulario para enviar especialidad y fecha -->
+            <form method="POST" action="/agendar-cita">
+                <label for="specialist">Especialidad:</label>
+                <select id="specialist" name="especialidad">
+                    <option value="cardiologia">Cardiología</option>
+                    <option value="dermatologia">Dermatología</option>
+                    <option value="pediatria">Pediatría</option>
+                    <option value="neurologia">Neurología</option>
+                    <option value="psiquiatria">Psiquiatría</option>
+                    <option value="ginecologia">Ginecología</option>
+                    <option value="traumatologia">Traumatología</option>
+                    <option value="endocrinologia">Endocrinología</option>
+                    <option value="gastroenterologia">Gastroenterología</option>
+                    <option value="oftalmologia">Oftalmología</option>
+                </select>
 
-            <label for="date">Fecha:</label>
-            <input type="date" id="date">
+                <label for="date">Fecha:</label>
+                <input type="date" id="date" name="fecha" required>
 
-            <label for="time">Hora:</label>
-            <input type="time" id="time">
-
-            <button onclick="confirmAppointment()">Confirmar Cita</button>
+                <button type="submit">Buscar especialistas</button>
+            </form>
         </div>
     </div>
 
     <style>
-        /* Estilos para el modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
         .modal-content { margin: 15% auto; padding: 20px; background-color: #fff; width: 300px; border-radius: 5px; }
         .close { float: right; font-size: 1.5em; cursor: pointer; }
@@ -54,7 +54,10 @@
     <script>
         function openAppointmentModal() { document.getElementById('appointmentModal').style.display = 'block'; }
         function closeAppointmentModal() { document.getElementById('appointmentModal').style.display = 'none'; }
-        function confirmAppointment() { alert("Cita confirmada para " + document.getElementById('date').value + " a las " + document.getElementById('time').value); closeAppointmentModal(); }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
 </body>
 </html>
