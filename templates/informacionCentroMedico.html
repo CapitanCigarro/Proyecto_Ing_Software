@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - {{ data.nombre }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>{{ data.nombre }}</h1>
+        <p><strong>Dirección:</strong> {{ data.direccion.calle }}, {{ data.direccion.ciudad }}, {{ data.direccion.provincia }}, {{ data.direccion.codigo_postal }}, {{ data.direccion.pais }}</p>
+        <p><strong>Teléfono ({{ data.telefono.tipo }}):</strong> {{ data.telefono.numero }}</p>
+        <p><strong>Email:</strong> {{ data.email }}</p>
+        <h2>Horarios de Atención</h2>
+        <ul>
+            <li><strong>Lunes a Viernes:</strong> {{ data.horarios.lunes_a_viernes }}</li>
+            <li><strong>Sábado:</strong> {{ data.horarios.sabado }}</li>
+            <li><strong>Domingo:</strong> {{ data.horarios.domingo }}</li>
+        </ul>
+        <h2>Especialidades</h2>
+        <ul>
+            {% for especialidad in data.especialidades %}
+                <li>{{ especialidad }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Contacto de Urgencias</h2>
+        <p><strong>Teléfono:</strong> {{ data.contacto_urgencias.telefono }}</p>
+        <p>{{ data.contacto_urgencias.descripcion }}</p>
+        <a href="/" class="btn btn-primary">Volver a Inicio</a>
+    </div>
+</body>
+</html>
