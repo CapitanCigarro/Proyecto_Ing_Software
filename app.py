@@ -40,6 +40,19 @@ def confirmar_cita():
             return "Error: Faltan campos en el formulario", 400
 
     return render_template('agendar_cita.html')
+
+@app.route('/ver-horarios', methods=['GET'])
+def ver_horarios():
+    return render_template('horarios.html')
+
+@app.route("/consulta-horarios", methods=["POST"])
+def consultar_horarios():
+    rut = request.form.get("rut")
+    especialista = Especialista.get_especialista(rut)
+    if especialista is None:
+        return render_template("horarios.html", error="El RUT ingresado no es válido.", rut=rut, horarios=None) 
+    horarios = especialista.get_disponibilidad()
+    return render_template("horarios.html", horarios=horarios, rut=rut)
     
 if __name__ == '__main__':
     app.run(debug=True, port=1928)

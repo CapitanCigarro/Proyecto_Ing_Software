@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios de Especialistas</title>
+</head>
+<body>
+    <h1>Consultar Horarios de Especialistas</h1>
+    <form method="POST" action="/consulta-horarios">
+        <label for="rut">Ingrese el RUT del especialista (Con puntos y guion):</label>
+        <input type="text" id="rut" name="rut" placeholder="Ej: 12345678-9" required>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if horarios %}
+        <h2>Horarios disponibles</h2>
+        <ul>
+            {% for horario in horarios %}
+                <li>{{ horario }}</li>
+            {% endfor %}
+        </ul>
+    {% elif horarios is not none %}
+        <p>No se encontraron horarios disponibles para el especialista con RUT {{ rut }}.</p>
+    {% endif %}
+</body>
+</html>
