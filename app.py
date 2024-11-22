@@ -53,6 +53,41 @@ def consultar_horarios():
         return render_template("horarios.html", error="El RUT ingresado no es válido.", rut=rut, horarios=None) 
     horarios = especialista.get_disponibilidad()
     return render_template("horarios.html", horarios=horarios, rut=rut)
+
+@app.route("/reagendar", methods=["GET", "POST"])
+def reagendar():
+    # Must be changed when db integration
+    if request.method == "POST":
+        with open('Data/datosCitasAgendadas.json', 'r', encoding='utf-8') as file:
+            dates = json.load(file)
+            try:
+                id = request.form.get("id")
+                date = dates[id]
+                static = date["static"]
+                stInfo = []
+                variable = date["variable"]
+                
+                for key in static.keys():
+                    stInfo.append(f"{key} : {static[key]}")
+                
+                variableInfo = []
+                
+                for key in variable:
+                    variableInfo.append(variable[key])
+                
+                return render_template("reagendar_cita.html", static = stInfo, variable = variableInfo, id = id)
+            except KeyError:
+                return render_template("reagendar_cita.html", error="No existe cita con este id")
+    else:
+        return render_template("reagendar_cita.html")
+
+#Function that actually changes the json file / database
+@app.route("/reagendar/r", methods=["POST"])
+def reag():
+    for a in request.form:
+        print(a)
+    
+    return render_template("reagendar_cita.html")
     
 if __name__ == '__main__':
     app.run(debug=True, port=1928)

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reagendar Cita</title>
+</head>
+<body>
+    <h1>Reagendar Cita</h1>
+    <form method="POST" action="/reagendar">
+        <label for="id">Ingrese ID de la cita</label>
+        <input type="text" id="id" name="id" required>
+        <button type="submit">Buscar Cita</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if static %}
+        <h1>Informacion de la cita</h1>
+        <ul>
+            {% for info in static %}
+                <li>{{info}}</li>
+            {% endfor %}
+        </ul>
+        <h1></h1>
+        <div id="appointmentModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAppointmentModal()">&times;</span>
+                <h2>Solicitar Cita</h2>
+                
+                <form method="POST" action="/reagendar/r">
+                    <label for="hour">Hora:</label>
+                    <select id="hour" name="hour">
+                        <option value="09:00">09:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="15:00">15:00</option>
+
+                    </select>
+    
+                    <label for="date">Fecha:</label>
+                    <input type="date" id="date" name="date" required>
+                    <button type="submit">Reagendar</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    
+    <script>
+        function openAppointmentModal() { document.getElementById('appointmentModal').style.display = 'block'; }
+        function closeAppointmentModal() { document.getElementById('appointmentModal').style.display = 'none'; }
+    </script>
+</body>
+</html>

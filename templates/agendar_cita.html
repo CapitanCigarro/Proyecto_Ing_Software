@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Citas</title>
+    <title>{% block pageName  %}Agenda de Citas{% endblock %}</title> 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Agendar Cita Médica</h1>
+        <h1 class="mt-5">{% block bodyTitle %}Agendar Cita Médica {% endblock %}</h1>
 
         <!-- Mostrar Especialidad y Fecha Seleccionada -->
         <h3>Especialidad: {{ especialidad }}</h3>
