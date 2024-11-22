@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Cambio de Disponibilidad</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmación de Cambio de Disponibilidad</h1>
+        {% if error %}
+            <p style="color: red;">No se pudo cambiar la disponibilidad: {{ error }}</p>
+        {% else %}
+            <p>La disponibilidad ha sido cambiada exitosamente.</p>
+        {% endif %}
+        <button onclick="location.href='/' ">Volver al Menú Inicial</button>
+    </div>
+</body>
+</html>

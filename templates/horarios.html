@@ -19,6 +19,10 @@
 
     {% if horarios %}
         <h2>Horarios disponibles</h2>
+        <form method="POST" action="/editar-horario">
+            <input type="hidden" name="rut" value="{{ rut }}">
+            <button type="submit">Editar horarios</button>
+        </form>
         <ul>
             {% for horario in horarios %}
                 <li>{{ horario }}</li>

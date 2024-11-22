@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Disponibilidad</title>
+</head>
+<body>
+    <h1>Editar Disponibilidad del Especialista</h1>
+
+    <form method="POST" action="/confirmar-cambio-disponibilidad">
+        <input type="hidden" name="rut" value="{{ rut }}">
+        <p>Especialista: {{ nombre }}</p>
+
+        <h2>Disponibilidad General</h2>
+        <p>Selecciona los horarios disponibles para todos los días:</p>
+        <div>
+            {% for horario in horario_generico %}
+            <label><input type="checkbox" name="horarios_generales" value={{ horario }}> {{ horario }} </label>
+            {% endfor %}
+        </div>
+
+        <h2>Disponibilidad Específica</h2>
+        <p>Agrega horarios específicos para una fecha:</p>
+        <div>
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha">
+        </div>
+        <div>
+            <p>Selecciona los horarios para esta fecha:</p>
+            {% for horario in horario_generico %}
+            <label><input type="checkbox" name="horarios_especificos" value=horario> {{ horario }} </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html>

@@ -88,6 +88,31 @@ def reag():
         print(a)
     
     return render_template("reagendar_cita.html")
+
+@app.route('/editar-horario', methods=['POST'])
+def editar_horarios():
+    rut = request.form['rut']
+    especialista = Especialista.get_especialista(rut)
+    horario_generico = []
+    for i in range(8, 17):
+        horario_generico.append(f"{i}:00")
+        horario_generico.append(f"{i}:30") 
+    if especialista is None:
+        return render_template("horarios.html", error="El RUT ingresado no es válido.", rut=rut, horarios=None)
+    return render_template('editar_horario.html', nombre=especialista.nombre, horario_generico=horario_generico, rut=rut)
+
+@app.route('/confirmar-cambio-disponibilidad', methods=['POST'])
+def confirmar_cambio_disponibilidad():
+    rut = request.form['rut']
+    horarios_generales = request.form.getlist('horarios_generales')
+    fecha = request.form['fecha']
+    horarios_especificos = request.form.getlist('horarios_especificos')
     
+    especialista = Especialista.get_especialista(rut)
+    cambio_exitoso = especialista.set_disponibilidad(horarios_generales, horarios_especificos, fecha)
+    if cambio_exitoso:
+        return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre)
+    return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre, error="No se pudo realizar el cambio de disponibilidad")
+
 if __name__ == '__main__':
     app.run(debug=True, port=1928)

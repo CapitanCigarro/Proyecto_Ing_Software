@@ -40,3 +40,20 @@ class Especialista:
             if hora['rut'] == str(self.rut):
                 return list(hora['horas'])
 
+    def set_disponibilidad(self, horario_general, horario_especifico, fecha):
+        file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosHorasDisponibles.json')
+        with open(file_path) as file:
+            data = json.load(file)
+        
+        nuevas_horas = []
+        for hora in horario_general:
+            nuevas_horas.append(str(hora))
+        try:
+            for hora in data:
+                if hora['rut'] == str(self.rut):
+                    hora['horas'] = nuevas_horas
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(data, file, indent=4, ensure_ascii=False)
+            return True
+        except:
+            return False
