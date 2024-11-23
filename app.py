@@ -3,6 +3,7 @@ from flask import render_template, redirect, request, Response, session
 #from flask_mysqldb import MySQL, MySQLdb
 from Code.Logic.Especialista import Especialista
 import json
+import os
 
 app = Flask(__name__)
 
@@ -62,11 +63,12 @@ def reagendar():
             dates = json.load(file)
             try:
                 id = request.form.get("id")
+                print(id)
                 date = dates[id]
                 static = date["static"]
                 stInfo = []
                 variable = date["variable"]
-                
+                                
                 for key in static.keys():
                     stInfo.append(f"{key} : {static[key]}")
                 
@@ -75,7 +77,7 @@ def reagendar():
                 for key in variable:
                     variableInfo.append(variable[key])
                 
-                return render_template("reagendar_cita.html", static = stInfo, variable = variableInfo, id = id)
+                return render_template("reagendar_cita.html", static = stInfo, variable = variableInfo, idCita = id)
             except KeyError:
                 return render_template("reagendar_cita.html", error="No existe cita con este id")
     else:
@@ -83,11 +85,38 @@ def reagendar():
 
 #Function that actually changes the json file / database
 @app.route("/reagendar/r", methods=["POST"])
-def reag():
-    for a in request.form:
-        print(a)
+def r():
+    hour = request.form["hour"]
+    id = request.form["id"]
+    date = request.form["date"]
+    comments = request.form["comments"]
+    filename = "Data/datosCitasAgendadas.json"
     
-    return render_template("reagendar_cita.html")
+    info = []
+    
+    with open(filename, 'r') as file:
+            data = json.load(file)
+            drDate = data[id]["variable"]
+            print(data)
+            drDate["Hora"] = hour
+            date = f"{date[8:]}-{date[5:7]}-{date[0:4]}"
+            drDate["Fecha"] = date
+            drDate["Comentarios"] = comments
+            data[id]["variable"] = drDate
+            file.seek(0)
+            static = data[id]["static"]
+            variab = data[id]["variable"]
+            for key in static.keys():
+                info.append(f"{key} : {static[key]}")
+            for key in variab.keys():
+                info.append(f"{key} : {variab[key]}")
+                
+
+
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)
+
+    return render_template("reagendado.html", info=info)
 
 @app.route('/editar-horario', methods=['POST'])
 def editar_horarios():
@@ -113,7 +142,6 @@ def confirmar_cambio_disponibilidad():
     if cambio_exitoso:
         return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre)
     return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre, error="No se pudo realizar el cambio de disponibilidad")
-
 
 @app.route('/lista-especialistas')
 def lista_especialistas():
