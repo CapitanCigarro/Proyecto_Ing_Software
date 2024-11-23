@@ -1,0 +1,52 @@
+[
+    {
+        "nombre": "Dr. Juan Pérez",
+        "rut": "12.345.678-9",
+        "especialidad": "cardiologia"
+    },
+    {
+        "nombre": "Dra. María González",
+        "rut": "16.234.567-8",
+        "especialidad": "pediatria"
+    },
+    {
+        "nombre": "Dr. Carlos Muñoz",
+        "rut": "13.876.543-2",
+        "especialidad": "neurologia"
+    },
+    {
+        "nombre": "Dra. Camila López",
+        "rut": "14.654.321-5",
+        "especialidad": "dermatologia"
+    },
+    {
+        "nombre": "Dr. Pedro Soto",
+        "rut": "15.432.198-7",
+        "especialidad": "psiquiatria"
+    },
+    {
+        "nombre": "Dra. Andrea Martínez",
+        "rut": "17.345.678-1",
+        "especialidad": "ginecologia"
+    },
+    {
+        "nombre": "Dr. Rodrigo Hernández",
+        "rut": "18.765.432-0",
+        "especialidad": "traumatologia"
+    },
+    {
+        "nombre": "Dra. Valentina Reyes",
+        "rut": "19.123.456-3",
+        "especialidad": "endocrinologia"
+    },
+    {
+        "nombre": "Dr. José Rojas",
+        "rut": "10.987.654-5",
+        "especialidad": "gastroenterologia"
+    },
+    {
+        "nombre": "Dra. Fernanda Silva",
+        "rut": "11.234.567-6",
+        "especialidad": "oftalmologia"
+    }
+]

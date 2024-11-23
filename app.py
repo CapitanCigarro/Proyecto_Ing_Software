@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, redirect, request, Response, session
-from flask_mysqldb import MySQL, MySQLdb
+#from flask_mysqldb import MySQL, MySQLdb
 from Code.Logic.Especialista import Especialista
 import json
 
@@ -113,6 +113,11 @@ def confirmar_cambio_disponibilidad():
     if cambio_exitoso:
         return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre)
     return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre, error="No se pudo realizar el cambio de disponibilidad")
+
+
+@app.route('/lista-especialistas')
+def lista_especialistas():
+    return render_template('lista_especialistas.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=1928)

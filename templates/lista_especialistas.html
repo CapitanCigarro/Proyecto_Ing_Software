@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de especialistas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .especialista {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conoce a nuestros especialistas</h1>
+
+    <div id="contenedor">
+        <p>Cargando especialistas...</p>
+    </div>
+
+    <script>
+        // Función para cargar el JSON
+        async function cargarDatos() {
+            const contenedor = document.getElementById('contenedor');
+            try {
+                const respuesta = await fetch('static/Data/datosEspecialistas.json'); // Cargar el archivo JSON
+                if (!respuesta.ok) throw new Error('No se pudo cargar el archivo JSON');
+                const datos = await respuesta.json(); // Convertir a objeto JavaScript
+
+                // Limpiar el contenedor antes de añadir los datos
+                contenedor.innerHTML = '';
+
+                // Iterar sobre los datos y mostrarlos en HTML
+                datos.forEach(persona => {
+                    const personaDiv = document.createElement('div');
+                    personaDiv.classList.add('especialista');
+                    personaDiv.innerHTML = `<strong>Nombre:</strong> ${persona.nombre} <br>
+                                             <strong>RUT:</strong> ${persona.rut} <br>
+                                             <strong>Especialidad:</strong> ${persona.especialidad}`;
+                    contenedor.appendChild(personaDiv);
+                });
+            } catch (error) {
+                console.error("Error al cargar el JSON:", error);
+                contenedor.innerHTML = '<p>Error al cargar los especialistas. Inténtalo más tarde.</p>';
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        cargarDatos();
+    </script>
+</body>
+</html>
