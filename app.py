@@ -33,14 +33,95 @@ def confirmar_cita():
             especialista = Especialista.get_especialista(rut)
             fecha = request.form['fecha']
             hora = request.form['hora']
+            fecha = f"{fecha[8:]}-{fecha[5:7]}-{fecha[0:4]}"
+            print("a")
+            
+            with open('Data/datosCitasSimple.json', 'r') as f:
+                dates = json.load(f)
+                amount = len(dates) + 1
+                id = f"cita{amount}"
+                dates[id] = False
+                
+            with open('Data/datosCitasSimple.json', 'w') as file:
+                json.dump(dates, file, indent=4)
+            print("b")
 
-            return render_template('confirmar_cita.html', especialidad=especialista.especialidad, fecha=fecha, hora=hora, especialista=especialista, nombre=especialista.nombre)
+            with open('Data/datosCitasAgendadas.json', 'r') as file:
+                completedDates = json.load(file)
+                completedDates[id] = {
+                    "static" : {
+                        "id" : id,
+                        "Doctor" : especialista.nombre,
+                        "Especialidad del Doctor" : especialista.especialidad,
+                        "Paciente" : "",
+                        "Telefono Paciente" : "",
+                        "Email Paciente" : "",
+                        "RUN" : ""
+                    },
+                    "variable" : {
+                        "Hora" : hora,
+                        "Fecha" : fecha,
+                        "Comentarios" : ""
+                    }
+                }
+            print("c")
+            with open('Data/datosCitasAgendadas.json', 'w') as file:
+                json.dump(completedDates, file, indent=4)
+
+            return render_template('confirmar_cita.html', especialidad=especialista.especialidad, fecha=fecha, hora=hora, especialista=especialista, nombre=especialista.nombre, idCita = id)
 
         except KeyError as e:
-            print(f"Error: El campo {e} no se encuentra en el formulario")
-            return "Error: Faltan campos en el formulario", 400
+            pass
+            #print(f"Error: El campo {e} no se encuentra en el formulario")
+            #return "Error: Faltan campos en el formulario", 400
 
     return render_template('agendar_cita.html')
+
+@app.route("/confirmar-cita/confirmada", methods=["POST"])
+def confirmada():
+    data = request.form
+    name = data["nombre"]
+    run = data["rut"]
+    phone = data["telefono"]
+    email = data["correo"]
+    comments = data["comentarios"]
+    id = data["id"]
+    
+    simpleData = 'Data/datosCitasSimple.json'
+    datesData = 'Data/datosCitasAgendadas.json'
+    
+    with open(datesData, 'r') as file:
+        data = json.load(file)
+        date = data[id]
+        date["static"]["Paciente"] = name
+        date["static"]["Telefono Paciente"] = phone
+        date["static"]["Email Paciente"] = email
+        date["static"]["RUN"] = run
+        date["variable"]["Comentarios"] = comments
+        data[id] = date
+        
+    with open(datesData, 'w') as file:
+        json.dump(data, file, indent=4)
+    
+    with open(simpleData, 'r') as file:
+        data = json.load(file)
+        data[id] = True
+    
+    with open(simpleData, 'w') as file:
+        json.dump(data, file, indent=4)    
+    
+    info = []
+    
+    with open(datesData, 'r') as file:
+        data = json.load(file)
+        static = data[id]["static"]
+        variable = data[id]["variable"]
+        for key in static.keys():
+            info.append(f"{key} : {static[key]}")
+        for key in variable.keys():
+            info.append(f"{key} : {variable[key]}")
+    
+    return render_template('agendado.html', info=info)
 
 @app.route('/ver-horarios', methods=['GET'])
 def ver_horarios():
@@ -63,7 +144,6 @@ def reagendar():
             dates = json.load(file)
             try:
                 id = request.form.get("id")
-                print(id)
                 date = dates[id]
                 static = date["static"]
                 stInfo = []
@@ -111,7 +191,6 @@ def r():
             for key in variab.keys():
                 info.append(f"{key} : {variab[key]}")
                 
-
 
     with open(filename, 'w') as file:
         json.dump(data, file, indent=4)

@@ -14,7 +14,7 @@
         <p><strong>Hora:</strong> {{ hora }}</p>
         <p><strong>Especialista:</strong> Dr. {{ especialista.nombre }}</p>
 
-        <form action="{{ url_for('confirmar_cita') }}" method="POST">
+        <form action="/confirmar-cita/confirmada" method="POST">
             <div class="form-group">
                 <label for="nombre">Tu Nombre:</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -34,6 +34,12 @@
                 <label for="comentarios">Comentarios (Opcional):</label>
                 <textarea class="form-control" id="comentarios" name="comentarios"></textarea>
             </div>
+            
+            {% if idCita %}
+            <div>
+                <input type="hidden" id="id" name="id" value={{ idCita }}>
+            </div>
+            {% endif %}
 
             <button type="submit" class="btn btn-primary">Confirmar Cita</button>
         </form>

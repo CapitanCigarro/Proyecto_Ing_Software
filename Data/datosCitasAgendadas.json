@@ -14,5 +14,21 @@
             "Fecha": "08-12-2024",
             "Comentarios": "i'm dead"
         }
+    },
+    "cita2": {
+        "static": {
+            "id": "cita2",
+            "Doctor": "Dr. Juan P\u00c3\u00a9rez",
+            "Especialidad del Doctor": "cardiologia",
+            "Paciente": "a",
+            "Telefono Paciente": "c",
+            "Email Paciente": "d",
+            "RUN": "b"
+        },
+        "variable": {
+            "Hora": "09:00",
+            "Fecha": "23-11-2024",
+            "Comentarios": "e"
+        }
     }
 }

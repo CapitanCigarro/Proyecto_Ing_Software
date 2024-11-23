@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cita Reagendada</title>
+    <title>Cita Agendada</title>
 </head>
 <body>
-    <form method="POST" action="/reagendar">
-        <label for="id">Ingrese ID de la cita</label>
-        <input type="text" id="id" name="id" required>
-        <button type="submit">Buscar Cita</button>
-    </form>
-
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
     {% if info %}
         <h1>Informacion de la cita agendada</h1>
         <ul>
@@ -26,5 +16,9 @@
         </div>
     {% endif %}
     
+    <script>
+        function openAppointmentModal() { document.getElementById('appointmentModal').style.display = 'block'; }
+        function closeAppointmentModal() { document.getElementById('appointmentModal').style.display = 'none'; }
+    </script>
 </body>
 </html>

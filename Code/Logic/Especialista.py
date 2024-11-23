@@ -3,6 +3,7 @@ import os
 
 class Especialista:
     nombre : str
+    especialidad : str
     
     def __init__(self, nombre : str, rut, especialidad) -> None:
         self.nombre = nombre
