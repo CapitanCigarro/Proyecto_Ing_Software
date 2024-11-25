@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Disponibilidad</title>
+    <style>
+        #horarios-especificos {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Editar Disponibilidad del Especialista</h1>
@@ -14,7 +19,9 @@
 
         <h2>Disponibilidad General</h2>
         <p>Selecciona los horarios disponibles para todos los días:</p>
+        <label><input type="checkbox" name="mantener_horarios" value="mantener_horarios"> Mantener horarios actuales (Si se selecciona no se consideraran los horarios generales seleccionados)</label>
         <div>
+
             {% for horario in horario_generico %}
             <label><input type="checkbox" name="horarios_generales" value={{ horario }}> {{ horario }} </label>
             {% endfor %}
@@ -26,14 +33,26 @@
             <label for="fecha">Fecha:</label>
             <input type="date" id="fecha" name="fecha">
         </div>
-        <div>
+        <div id="horarios-especificos">
             <p>Selecciona los horarios para esta fecha:</p>
             {% for horario in horario_generico %}
-            <label><input type="checkbox" name="horarios_especificos" value=horario> {{ horario }} </label>
+            <label><input type="checkbox" name="horarios_especificos" value={{ horario }}> {{ horario }} </label>
             {% endfor %}
         </div>
 
         <button type="submit">Guardar Cambios</button>
     </form>
+    <script>
+        const fechaInput = document.getElementById('fecha');
+        const horariosEspecificos = document.getElementById('horarios-especificos');
+
+        fechaInput.addEventListener('input', function () {
+            if (fechaInput.value) {
+                horariosEspecificos.style.display = 'block';
+            } else {
+                horariosEspecificos.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

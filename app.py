@@ -134,7 +134,7 @@ def consultar_horarios():
     if especialista is None:
         return render_template("horarios.html", error="El RUT ingresado no es válido.", rut=rut, horarios=None) 
     horarios = especialista.get_disponibilidad()
-    return render_template("horarios.html", horarios=horarios, rut=rut)
+    return render_template("horarios.html", horarios=horarios[0], horarios_especificos=horarios[1], rut=rut)
 
 @app.route("/reagendar", methods=["GET", "POST"])
 def reagendar():
@@ -215,9 +215,16 @@ def confirmar_cambio_disponibilidad():
     horarios_generales = request.form.getlist('horarios_generales')
     fecha = request.form['fecha']
     horarios_especificos = request.form.getlist('horarios_especificos')
+    try:
+        mantener_horarios = request.form['mantener_horarios']
+    except:
+        mantener_horarios = False
+    
+    if horarios_especificos == []:
+        horarios_especificos = None
     
     especialista = Especialista.get_especialista(rut)
-    cambio_exitoso = especialista.set_disponibilidad(horarios_generales, horarios_especificos, fecha)
+    cambio_exitoso = especialista.set_disponibilidad(horarios_generales, horarios_especificos, fecha, mantener_horarios)
     if cambio_exitoso:
         return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre)
     return render_template('confirmar_cambio_disponibilidad.html', nombre=especialista.nombre, error="No se pudo realizar el cambio de disponibilidad")

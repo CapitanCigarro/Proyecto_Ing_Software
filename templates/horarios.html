@@ -18,11 +18,7 @@
     {% endif %}
 
     {% if horarios %}
-        <h2>Horarios disponibles</h2>
-        <form method="POST" action="/editar-horario">
-            <input type="hidden" name="rut" value="{{ rut }}">
-            <button type="submit">Editar horarios</button>
-        </form>
+        <h2>Horarios generales disponibles</h2>
         <ul>
             {% for horario in horarios %}
                 <li>{{ horario }}</li>
@@ -31,5 +27,24 @@
     {% elif horarios is not none %}
         <p>No se encontraron horarios disponibles para el especialista con RUT {{ rut }}.</p>
     {% endif %}
+
+    {% if horarios_especificos %}
+        <h2>Horarios específicos disponibles</h2>
+        <ul>
+            {% for fecha, horarios in horarios_especificos.items() %}
+                <li>{{ fecha }}:
+                    <ul>
+                        {% for horario in horarios %}
+                            <li>{{ horario }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="POST" action="/editar-horario">
+        <input type="hidden" name="rut" value="{{ rut }}">
+        <button type="submit">Editar horarios</button>
+    </form>
 </body>
 </html>
