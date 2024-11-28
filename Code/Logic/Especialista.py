@@ -39,8 +39,13 @@ class Especialista:
             data = json.load(file)
         for hora in data:
             if hora['rut'] == str(self.rut):
-                horario = [hora['horas'],hora['fechas_especificas']]
-                return horario
+                horarioEspecialista = []
+                fecha = hora["fecha"]
+                horario = hora["horas"]
+                for hora in horario:
+                    horarioEspecialista.append(f"{hora} - {fecha}")
+
+                return horarioEspecialista
 
     def set_disponibilidad(self, horario_general, horario_especifico, fecha, mantener_horarios):
         file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosHorasDisponibles.json')

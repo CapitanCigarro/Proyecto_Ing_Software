@@ -30,5 +30,21 @@
             "Fecha": "23-11-2024",
             "Comentarios": "e"
         }
+    },
+    "cita3": {
+        "static": {
+            "id": "cita3",
+            "Doctor": "Dra. Andrea Mart\u00c3\u00adnez",
+            "Especialidad del Doctor": "ginecologia",
+            "Paciente": "pancho",
+            "Telefono Paciente": "c",
+            "Email Paciente": "d",
+            "RUN": "b"
+        },
+        "variable": {
+            "Hora": "15:30 - 2024-11-13",
+            "Fecha": "27-11-2024",
+            "Comentarios": "e"
+        }
     }
 }
