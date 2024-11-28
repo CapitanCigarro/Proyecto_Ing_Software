@@ -22,7 +22,7 @@ def agendar_cita():
     especialidad = request.form['especialidad']
     fecha = request.form['fecha']
 
-    especialistas = Especialista.get_especialistas(especialidad)
+    especialistas = Especialista.get_especialistas(especialidad, fecha)
     return render_template('agendar_cita.html', especialistas=especialistas, especialidad=especialidad, fecha=fecha)  
 
 @app.route('/confirmar-cita', methods=['GET', 'POST'])

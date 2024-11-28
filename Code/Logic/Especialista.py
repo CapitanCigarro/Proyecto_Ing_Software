@@ -5,11 +5,11 @@ class Especialista:
     nombre : str
     especialidad : str
     
-    def __init__(self, nombre : str, rut, especialidad) -> None:
+    def __init__(self, nombre : str, rut, especialidad, fecha=None) -> None:
         self.nombre = nombre
         self.rut = rut
         self.especialidad = especialidad
-        self.horas = self.get_disponibilidad()
+        self.horas = self.get_disponibilidad(fecha)
             
     @staticmethod        
     def get_especialista(rut):
@@ -22,7 +22,7 @@ class Especialista:
         return None
             
     @staticmethod
-    def get_especialistas(especialidad):
+    def get_especialistas(especialidad, fecha=None):
         file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosEspecialistas.json')
         with open(file_path) as file:
             data = json.load(file)
@@ -30,19 +30,27 @@ class Especialista:
         especialistas = []
         for especialista in data:
             if especialista['especialidad'] == especialidad:
-                especialistas.append(Especialista(especialista['nombre'], especialista['rut'], especialista['especialidad']))
+                especialistas.append(Especialista(especialista['nombre'], especialista['rut'], especialista['especialidad'], fecha))
         return especialistas
         
-    def get_disponibilidad(self):
+    def get_disponibilidad(self, fecha=None):
         file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosHorasDisponibles.json')
         with open(file_path) as file:
             data = json.load(file)
+        if not fecha:
+            for hora in data:
+                if hora['rut'] == str(self.rut):
+                    horario = [hora['horas'],hora['fechas_especificas']]
+                    return horario
         for hora in data:
             if hora['rut'] == str(self.rut):
-                horario = [hora['horas'],hora['fechas_especificas']]
-                return horario
+                if fecha:
+                    if fecha in hora['fechas_especificas']:
+                        return hora['fechas_especificas'][fecha]
+                return hora['horas']
+        return []
 
-    def set_disponibilidad(self, horario_general, horario_especifico, fecha, mantener_horarios):
+    def set_disponibilidad(self, horario_general, horario_especifico, fecha, mantener_horarios=True):
         file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosHorasDisponibles.json')
         with open(file_path) as file:
             data = json.load(file)
