@@ -34,7 +34,6 @@ def confirmar_cita():
             fecha = request.form['fecha']
             hora = request.form['hora']
             fecha = f"{fecha[8:]}-{fecha[5:7]}-{fecha[0:4]}"
-            print("a")
             
             with open('Data/datosCitasSimple.json', 'r') as f:
                 dates = json.load(f)
@@ -44,7 +43,6 @@ def confirmar_cita():
                 
             with open('Data/datosCitasSimple.json', 'w') as file:
                 json.dump(dates, file, indent=4)
-            print("b")
 
             with open('Data/datosCitasAgendadas.json', 'r') as file:
                 completedDates = json.load(file)
@@ -64,7 +62,6 @@ def confirmar_cita():
                         "Comentarios" : ""
                     }
                 }
-            print("c")
             with open('Data/datosCitasAgendadas.json', 'w') as file:
                 json.dump(completedDates, file, indent=4)
 
