@@ -74,3 +74,33 @@ class Especialista:
             return True
         except:
             return False
+        
+    def get_citas(self, fecha_especifica=None):
+        file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data', 'datosCitasAgendadas.json')
+        with open(file_path) as file:
+            data = json.load(file)
+        citas = []
+        for cita in data:
+            if cita['static']['Rut_doctor'] == self.rut:
+                if not fecha_especifica:
+                    citas.append(
+                        {
+                            "id_cita": cita['static']['id'], 
+                            "nombre_paciente": cita['static']['Paciente'], 
+                            "Comentarios": cita['variable']['Comentarios'], 
+                            "fecha": cita['variable']['Fecha'], 
+                            "hora": cita['variable']['Hora']
+                        }
+                    )
+                elif cita['Fecha'] == fecha_especifica:
+                    citas.append(
+                        {
+                            "id_cita": cita['static']['id'], 
+                            "nombre_paciente": cita['static']['Paciente'], 
+                            "Comentarios": cita['variable']['Comentarios'], 
+                            "fecha": cita['variable']['Fecha'], 
+                            "hora": cita['variable']['Hora']
+                        }
+                    )        
+        return citas
+        

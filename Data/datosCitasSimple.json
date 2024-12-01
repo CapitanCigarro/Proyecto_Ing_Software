@@ -1,5 +1,11 @@
 {
     "cita1": true,
     "cita2": true,
-    "cita3": true
+    "cita3": true,
+    "cita4": false,
+    "cita5": true,
+    "cita6": false,
+    "cita7": false,
+    "cita8": true,
+    "cita9": true
 }

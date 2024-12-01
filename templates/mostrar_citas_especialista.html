@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas del Especialista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Citas del Especialista</h1>
+    {% if citas is none %}
+        <!-- Formulario para ingresar el RUT -->
+        <form method="POST" action="/citas-especialista">
+            <label for="rut">Ingrese su RUT:</label>
+            <input type="text" id="rut" name="rut" required>
+            <button type="submit">Buscar Citas</button>
+        </form>
+    {% elif citas %}
+        <!-- Lista de citas -->
+        <ul>
+            <strong>Citas para el especialista:</strong> {{ especialista.nombre }}  
+            {% for cita in citas %}
+            <li>
+                <strong>Paciente:</strong> {{ cita.nombre_paciente }} <br>
+                <strong>Comentarios:</strong> {{ cita.Comentarios }} <br>
+                <strong>Fecha:</strong> {{ cita.fecha }}
+                <strong>Hora:</strong> {{ cita.hora }}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="/citas-especialista">Buscar otro especialista</a>
+    {% else %}
+        <p>No se encontraron citas para el especialista.</p>
+        <a href="/citas-especialista">Intentar de nuevo</a>
+    {% endif %}
+</body>
+</html>

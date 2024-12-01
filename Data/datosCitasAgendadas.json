@@ -1,50 +1,50 @@
-{
-    "cita1": {
+[
+    {
         "static": {
-            "id": "cita1",
-            "Doctor": "Dr.Zeus",
-            "Especialidad del Doctor": "Love",
-            "Paciente": "Pepsiman",
-            "Telefono Paciente": "+569 2",
-            "Email Paciente": "a@hotmail.com",
-            "RUN": "00.000.000-k"
-        },
-        "variable": {
-            "Hora": "15:00",
-            "Fecha": "08-12-2024",
-            "Comentarios": "i'm dead"
-        }
-    },
-    "cita2": {
-        "static": {
-            "id": "cita2",
-            "Doctor": "Dr. Juan P\u00c3\u00a9rez",
+            "id": "cita5",
+            "Rut_doctor": "12.345.678-9",
             "Especialidad del Doctor": "cardiologia",
-            "Paciente": "a",
-            "Telefono Paciente": "c",
-            "Email Paciente": "d",
-            "RUN": "b"
+            "Paciente": "alo",
+            "Telefono Paciente": "12",
+            "Email Paciente": "12",
+            "RUN": "12"
         },
         "variable": {
-            "Hora": "09:00",
-            "Fecha": "23-11-2024",
-            "Comentarios": "e"
+            "Hora": "8:00",
+            "Fecha": "02-12-2024",
+            "Comentarios": "siii"
         }
     },
-    "cita3": {
+    {
         "static": {
-            "id": "cita3",
-            "Doctor": "Dra. Andrea Mart\u00c3\u00adnez",
-            "Especialidad del Doctor": "ginecologia",
-            "Paciente": "pancho",
-            "Telefono Paciente": "c",
-            "Email Paciente": "d",
-            "RUN": "b"
+            "id": "cita8",
+            "Rut_doctor": "123",
+            "Especialidad del Doctor": "traumatologia",
+            "Paciente": "benja",
+            "Telefono Paciente": "1212",
+            "Email Paciente": "blbalabl",
+            "RUN": "124"
         },
         "variable": {
-            "Hora": "15:30 - 2024-11-13",
-            "Fecha": "27-11-2024",
-            "Comentarios": "e"
+            "Hora": "08:00",
+            "Fecha": "02-12-2024",
+            "Comentarios": "me duele la wata\r\n"
+        }
+    },
+    {
+        "static": {
+            "id": "cita9",
+            "Rut_doctor": "18.765.432-0",
+            "Especialidad del Doctor": "traumatologia",
+            "Paciente": "alo",
+            "Telefono Paciente": "1212",
+            "Email Paciente": "jsjjasj",
+            "RUN": "1234"
+        },
+        "variable": {
+            "Hora": "08:30",
+            "Fecha": "02-12-2024",
+            "Comentarios": "alo"
         }
     }
-}
+]

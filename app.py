@@ -46,10 +46,10 @@ def confirmar_cita():
 
             with open('Data/datosCitasAgendadas.json', 'r') as file:
                 completedDates = json.load(file)
-                completedDates[id] = {
+                completedDates.append({
                     "static" : {
                         "id" : id,
-                        "Doctor" : especialista.nombre,
+                        "Rut_doctor" : especialista.rut,
                         "Especialidad del Doctor" : especialista.especialidad,
                         "Paciente" : "",
                         "Telefono Paciente" : "",
@@ -61,7 +61,7 @@ def confirmar_cita():
                         "Fecha" : fecha,
                         "Comentarios" : ""
                     }
-                }
+                })
             with open('Data/datosCitasAgendadas.json', 'w') as file:
                 json.dump(completedDates, file, indent=4)
 
@@ -89,13 +89,20 @@ def confirmada():
     
     with open(datesData, 'r') as file:
         data = json.load(file)
-        date = data[id]
+        for cita in data:
+            if cita['static']['id'] == id:
+                date = cita
+                break
+
         date["static"]["Paciente"] = name
         date["static"]["Telefono Paciente"] = phone
         date["static"]["Email Paciente"] = email
         date["static"]["RUN"] = run
         date["variable"]["Comentarios"] = comments
-        data[id] = date
+        for cita in data:
+            if cita['static']['id'] == id:
+                cita = date
+                break
         
     with open(datesData, 'w') as file:
         json.dump(data, file, indent=4)
@@ -106,17 +113,12 @@ def confirmada():
     
     with open(simpleData, 'w') as file:
         json.dump(data, file, indent=4)    
-    
+
+    especialista = Especialista.get_especialista(date['static']['Rut_doctor'])
     info = []
-    
-    with open(datesData, 'r') as file:
-        data = json.load(file)
-        static = data[id]["static"]
-        variable = data[id]["variable"]
-        for key in static.keys():
-            info.append(f"{key} : {static[key]}")
-        for key in variable.keys():
-            info.append(f"{key} : {variable[key]}")
+    info.append(f"Nombre del doctor: {especialista.nombre}")
+    info.append(f"Fecha de la cita: {date['variable']['Fecha']}")
+    info.append(f"Hora de la cita: {date['variable']['Hora']}")
     
     return render_template('agendado.html', info=info)
 
@@ -141,7 +143,9 @@ def reagendar():
             dates = json.load(file)
             try:
                 id = request.form.get("id")
-                date = dates[id]
+                for cita in dates:
+                    if cita['static']['id'] == id:
+                        date = cita
                 static = date["static"]
                 stInfo = []
                 variable = date["variable"]
@@ -229,6 +233,16 @@ def confirmar_cambio_disponibilidad():
 @app.route('/lista-especialistas')
 def lista_especialistas():
     return render_template('lista_especialistas.html')
+
+@app.route('/citas-especialista', methods=['POST', 'GET'])
+def ver_citas_especialista():
+    if request.method == "POST":
+        rut = request.form['rut']
+        especialista = Especialista.get_especialista(rut)
+        citas = especialista.get_citas()
+        return render_template('mostrar_citas_especialista.html', citas=citas, especialista=especialista)
+    else:
+        return render_template('mostrar_citas_especialista.html', citas=None)
 
 if __name__ == '__main__':
     app.run(debug=True, port=1928)
